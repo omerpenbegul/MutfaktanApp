@@ -41,10 +41,10 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		EF84F45D2DD7E40E000D2534 /* Exceptions for "Mutfaktan" folder in "Mutfaktan" target */ = {
+		EF679D592DDC8130003925E6 /* Exceptions for "Mutfaktan" folder in "Mutfaktan" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
+				"Supporting Files/Info.plist",
 			);
 			target = EF84F4342DD7E40C000D2534 /* Mutfaktan */;
 		};
@@ -54,7 +54,7 @@
 		EF84F4372DD7E40C000D2534 /* Mutfaktan */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				EF84F45D2DD7E40E000D2534 /* Exceptions for "Mutfaktan" folder in "Mutfaktan" target */,
+				EF679D592DDC8130003925E6 /* Exceptions for "Mutfaktan" folder in "Mutfaktan" target */,
 			);
 			path = Mutfaktan;
 			sourceTree = "<group>";
@@ -321,7 +321,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8GV7LA2PP6;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Mutfaktan/Info.plist;
+				INFOPLIST_FILE = "Mutfaktan/Supporting Files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -349,7 +349,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8GV7LA2PP6;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Mutfaktan/Info.plist;
+				INFOPLIST_FILE = "Mutfaktan/Supporting Files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
