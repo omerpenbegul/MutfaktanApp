@@ -6,45 +6,83 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class LoginViewController: UIViewController {
 
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var signupButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        emailTextField.layer.cornerRadius = 20
-        emailTextField.layer.shadowOpacity = 0.2
-        passwordTextField.layer.cornerRadius = 15
-        passwordTextField.layer.shadowOpacity = 0.2
+        setupUI()
     }
-//giriş kontrolü
-    @IBAction func loginButtonTapped(_ sender: UIButton) {
-        AuthViewModel.shared.login(email: emailTextField.text, password: passwordTextField.text) { success in
-            if success {
-                DispatchQueue.main.async {
-                    // tabbara geçiş sağlanıyor.
-                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                    let tabbarVC = storyboard.instantiateViewController(withIdentifier: "MainTabBarController")
-                    tabbarVC.modalPresentationStyle = .fullScreen
-                    self.present(tabbarVC, animated: true)
-                }
+    // textfield ve button özelleştirme
+    func setupUI() {
+        [emailTextField, passwordTextField].forEach { textField in
+            textField?.layer.cornerRadius = 8
+            textField?.layer.shadowColor = UIColor.black.cgColor
+            textField?.layer.shadowOpacity = 0.2
+            textField?.layer.shadowOffset = CGSize(width: 0, height: 2)
+            textField?.layer.shadowRadius = 4
+           // textField?.layer.borderWidth = 1
+           // textField?.layer.borderColor = UIColor.lightGray.cgColor
+            textField?.clipsToBounds = false
+        }
+        
+        loginButton.layer.cornerRadius = 8
+        loginButton.layer.shadowColor = UIColor.black.cgColor
+        loginButton.layer.shadowOpacity = 0.2
+        loginButton.layer.shadowOffset = CGSize(width: 0, height: 2)
+        loginButton.layer.shadowRadius = 4
+        
+        signupButton.layer.cornerRadius = 8
+        signupButton.layer.shadowColor = UIColor.black.cgColor
+        signupButton.layer.shadowOpacity = 0.2
+        signupButton.layer.shadowOffset = CGSize(width: 0, height: 2)
+        signupButton.layer.shadowRadius = 4
+        
+    }
+
+    // giriş kontrolü
+    @IBAction func loginTapped(_ sender: UIButton) {
+        guard let email = emailTextField.text, !email.isEmpty,
+              let password = passwordTextField.text, !password.isEmpty else {
+            showAlert(message: "Lütfen tüm alanları doldurun.")
+            return
+        }
+
+        Auth.auth().signIn(withEmail: email, password: password) { [weak self] result, error in
+            if let error = error {
+                self?.showAlert(message: error.localizedDescription)
             } else {
-                self.showAlert(message: "Giriş başarısız. Email veya şifre hatalı.")
+                // başarılı giriş
+                self?.goToMainApp()
             }
         }
     }
-//kayıt ekranına gidiş
-    @IBAction func goToSignup(_ sender: UIButton) {
+
+    @IBAction func signupTapped(_ sender: UIButton) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let signupVC = storyboard.instantiateViewController(withIdentifier: "SignupViewController") as! SignupViewController
-        self.present(signupVC, animated: true)
+        if let signupVC = storyboard.instantiateViewController(withIdentifier: "SignupVC") as? SignupViewController {
+            self.present(signupVC, animated: true, completion: nil)
+        }
     }
-//hatalı giriş için uyarı hata mesajı
+
+    // uyarı hata mesajı
     func showAlert(message: String) {
         let alert = UIAlertController(title: "Uyarı", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Tamam", style: .default))
         present(alert, animated: true)
+    }
+
+    func goToMainApp() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let tabBarVC = storyboard.instantiateViewController(withIdentifier: "MainTabBarController") as? UITabBarController {
+            tabBarVC.modalPresentationStyle = .fullScreen
+            self.present(tabBarVC, animated: true)
+        }
     }
 }
